@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webapp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/content/todoStyle.css') }}">
+</head>
+
+{% if eval == 1 %}
+<script>
+    document.getElementsByClassName("showS").style.display = "block";
+</script>
+
+{% endif %}
+
+<body>
+    <div class="container">
+
+        <div class="wrapper1">
+            <div class="box">
+
+                <form action="/add" method="post" class="form-search">
+
+                    <input type="text" class="search-txt" name="todo" placeholder="Enter Task">
+                    <button type="submit" class="btn">Add Task</button>
+
+                </form>
+            </div>
+        </div>
+        <nav class="wrapperhead">
+            <ul class="links">
+                <li><a href="{{ url_for('home') }}"><b>In Progress</b></a></li>
+                <li><a href="{{ url_for('completed') }}"><b>Completed</b></a></li>
+            </ul>
+        </nav>
+
+        {% if not tasks %}
+        <div class="wrapper2" style="display:block;">
+            <div class="box">
+               <h3>
+                You Have No Task To Display
+                </h3>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if tasks %}
+        <div class="clearbox">
+            <div class="clear">
+                <a href="/cleartask" class="delete">Clear all</a>
+            </div>
+        </div>
+        {% endif %}
+
+        {% for task in tasks %}
+        <div class="wrapper2">
+            <div class="song">
+                <p>
+                    {{task.task_Name}}
+
+                    <a href="/{{ task.id }}/remove" class="delete">
+                        Remove
+                    </a>
+
+                    <a href="/done/{{ task.id }}" class="done">
+                        Done
+                    </a>
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+    <footer>
+        <p>Vistein Payne 2021</p>
+    </footer>
+
+</body>
+
+</html>
